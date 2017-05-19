@@ -22,16 +22,22 @@ class Box extends React.Component {
             border: '1px solid dashed',
             color: this.props.color
         };
+
+        const clickMessage = this.props.showClickMessage
+            ? <p> Clicked {this.state.countClick} times </p>
+            : '';
         
         //Inline style. Not a good praxis
         return (
             <div onClick={this.onClick}>
                 <h1 style={styleTitle}>Box {this.props.name}</h1>
-                <p> Clicked {this.state.countClick} times </p>
                 {/*
-                This is not updated unless props are changed, state is updated, or forceUpdate() called.
-                <p> Clicked {this.state.countClick} times </p>
+                    - Conditional element.
+                    - This is not updated unless props are changed, state is updated, or forceUpdate() called.
+                    <p> Clicked {this.state.countClick} times </p>
                 */}
+                {clickMessage}
+                
             </div>
         );
     }
