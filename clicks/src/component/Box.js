@@ -5,6 +5,16 @@ const LightBox = (props)=>{
 }
 
 class Box extends React.Component {
+
+
+    constructor(props, context, updater){
+        super(props, context, updater);
+
+        //Would be cool do this automatically with all prototype functions
+        this.onClick = this.onClick.bind(this);
+    }
+
+
     render() {
         // Parenthesis used to help babel understand that h1 is inside div. 
         // If not, odd things can happen.
@@ -15,15 +25,18 @@ class Box extends React.Component {
         
         //Inline style. Not a good praxis
         return (
-            <div onClick={this.onClick.bind(this)}>
+            <div onClick={this.onClick}>
                 <h1 style={styleTitle}>Box {this.props.name}</h1>
             </div>
         );
     }
 
+
     onClick () {
         console.log('Clicked on ' + this.props.color);
     }
+
+
 }
 
 export {LightBox, Box};
