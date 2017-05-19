@@ -7,7 +7,7 @@ const LightBox = (props)=>{
 class Box extends React.Component {
     constructor(props, context, updater){
         super(props, context, updater);
-        //Would be cool do this automatically with all prototype functions
+        //Would be cool do this automatically with all prototype functions?
         this.onClick = this.onClick.bind(this);
 
         //State
@@ -38,11 +38,23 @@ class Box extends React.Component {
     onClick () {
         console.log('Clicked on ' + this.props.color + ' ' + this.state.countClick + ' times' );
 
-        //This doesn't override the state. It merge them, but only in the first level of the state object,
-        //it doesn't merge subobjecs
+        /*
+        setState():
+        - It doesn't override the state, merges it, but only in the first level of the state object, not in subobjecs
+        - It doesn't 'set' the state. If asks for a change state, and that state change is done async!
+        that's why an state object should never be manually changed, instead, create another and ask for update
+        - Also, react check what has changed to know what to update in the view. If the object is the same, it needs
+        to evaluate prop by prop... slow
+        - WRONG!!!: this.setState(this.state.countClick++);
+        */
         this.setState({
             countClick: this.state.countClick+1
         });
+
+        /*
+        We can't rely in the state after setState. If may have changed or not!
+        To do something when the state changes, there are other methods.
+        */
     }
 }
 
