@@ -12,8 +12,8 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
-        <Box name='powerfull in red' color='red'/>
-        <Box name='powerfull in green' color='green'/>
+        <Box name='powerful in red' color='red'/>
+        <Box name='powerful in green' color='green'/>
         <LightBox name='simple fast'/>    
       </div>
     );
