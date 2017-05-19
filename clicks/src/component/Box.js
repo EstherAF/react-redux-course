@@ -6,7 +6,23 @@ const LightBox = (props)=>{
 
 class Box extends React.Component {
     render() {
-        return <div>Box {this.props.name}</div>
+        // Parenthesis used to help babel understand that h1 is inside div. 
+        // If not, odd things can happen.
+        const styleTitle = {
+            border: '1px solid dashed',
+            color: this.props.color
+        };
+        
+        //Inline style. Not a good praxis
+        return (
+            <div onClick={this.onClick.bind(this)}>
+                <h1 style={styleTitle}>Box {this.props.name}</h1>
+            </div>
+        );
+    }
+
+    onClick () {
+        console.log('Clicked on ' + this.props.color);
     }
 }
 
