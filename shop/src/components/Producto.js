@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import GridTile from 'material-ui/GridList/GridTile';
+import {GridTile} from 'material-ui/GridList';
 
 class Producto extends Component {
-  render() {
-    return (
-      <GridTile title={this.props.nombre} subtitle={this.props.precio + '€'}>
-        <img src={'f/'+this.props.img} alt={this.props.nombre}/>
-      </GridTile>
-    );
-  }
+    render() {
+        return (
+            <GridTile title={this.props.nombre} subtitle={<span><b>{this.props.precio}</b>€</span>}>
+                <img src={`/f/${this.props.img}`} alt={this.props.nombre} />
+            </GridTile>
+        );
+    }
 }
 
 export default Producto;
