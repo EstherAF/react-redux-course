@@ -2,21 +2,24 @@ import React, { Component } from 'react';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import '../style/Cesta.css';
 
+const CestaLinea = (props) => {
+    return <TableRow key={props.id_producto}>
+        <TableRowColumn className="cesta_nombre">{props.nombre}</TableRowColumn>
+        <TableRowColumn>{props.precio} €</TableRowColumn>
+        <TableRowColumn><input type="number" min="0" max="99" defaultValue={props.cantidad} /></TableRowColumn>
+        <TableRowColumn>{props.precio * props.cantidad} €</TableRowColumn>
+    </TableRow> 
+};
+
 class Cesta extends Component {
     render() {
         
-        const producto = this.props.productos[0];
-        const cantidad = 2;
-        let lineas = [(
-            <TableRow key={producto.id}>
-                <TableRowColumn className="cesta_nombre">{producto.nombre}</TableRowColumn>
-                <TableRowColumn>{producto.precio} €</TableRowColumn>
-                <TableRowColumn><input type="number" min="0" max="99" defaultValue={cantidad} /></TableRowColumn>
-                <TableRowColumn>{cantidad*producto.precio} €</TableRowColumn>
-            </TableRow>
-        )];
+        let total = 0;
+        const lineas = this.props.cesta.map((linea) => {
+            total += linea.cantidad*linea.precio;
+            return <CestaLinea {...linea} />
+        });
 
-        const total = cantidad*producto.precio;
         return (
             <div className="cesta">
                 <Table selectable={false} fixedHeader={true}>

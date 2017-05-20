@@ -9,7 +9,11 @@ class ListadoProductos extends Component {
         return (
             <GridList cols={1} className="listado">
                 <Subheader>Camisas</Subheader>
-                {this.props.productos.map(producto => <Producto key={producto.id} {...producto} />)}
+                {this.props.productos.map(producto => 
+                    <Producto key={producto.id} 
+                              {...producto} 
+                    />
+                )}
             </GridList>
         );
     }
