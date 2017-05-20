@@ -3,7 +3,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import '../style/Cesta.css';
 
 const CestaLinea = (props) => {
-    return <TableRow key={props.id_producto}>
+    return <TableRow >
         <TableRowColumn className="cesta_nombre">{props.nombre}</TableRowColumn>
         <TableRowColumn>{props.precio} €</TableRowColumn>
         <TableRowColumn><input type="number" min="0" max="99" defaultValue={props.cantidad} /></TableRowColumn>
@@ -17,7 +17,7 @@ class Cesta extends Component {
         let total = 0;
         const lineas = this.props.cesta.map((linea) => {
             total += linea.cantidad*linea.precio;
-            return <CestaLinea {...linea} />
+            return <CestaLinea key={linea.id_producto} nombre={linea.nombre} precio={linea.precio} cantidad={linea.cantidad} />
         });
 
         return (
