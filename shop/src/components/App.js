@@ -14,18 +14,22 @@ class App extends Component {
 	constructor(props){
 		super(props);
 		this.setProductoDetalle = this.setProductoDetalle.bind(this);
+		this.addDetalleToCesta = this.addDetalleToCesta.bind(this);
+
 		this.state = {
 			productos,
-			cesta: [{ 
+			cesta: {
+				1: {
 					id_producto: productos[0].id, 
 					cantidad: 2
-			}],
+				}
+			},
 			id_producto_detalle: productos[0].id
-		}
+		};
 	}
 	render() {
 		const productoDetalle = this.state.productos.find(p => p.id === this.state.id_producto_detalle);
-		const datosCesta = this.state.cesta.map(linea => {
+		const datosCesta = Object.values(this.state.cesta).map(linea => {
 			const productoLinea = this.state.productos.find(p => p.id === linea.id_producto);
 			return {
 				id_producto: linea.id_producto,
@@ -40,7 +44,7 @@ class App extends Component {
 				<div id="app">
 					<ListadoProductos productos={productos} handleProductoClick={this.setProductoDetalle}/>
 					<Paper id="detalle" zDepth={3}>
-						<DetalleProducto {...productoDetalle} />
+						<DetalleProducto {...productoDetalle} handleComprarClick={this.addDetalleToCesta}/>
 					</Paper>
 					<Cesta cesta={datosCesta} /> </div>
 			</div>
@@ -49,6 +53,19 @@ class App extends Component {
 	setProductoDetalle(id_producto){
 		this.setState({
 			id_producto_detalle: id_producto
+		});
+	}
+	addDetalleToCesta(){
+		this.setState((prevState)=>{
+			const id_producto = prevState.id_producto_detalle;
+			const linea = prevState.cesta[id_producto];
+			const cantidad = linea? linea.cantidad + 1 : 1;
+			return { 
+				cesta: {
+					...prevState.cesta,
+					[id_producto]: { id_producto, cantidad }
+				} 
+			};
 		});
 	}
 }

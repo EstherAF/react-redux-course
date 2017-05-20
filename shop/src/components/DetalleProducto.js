@@ -15,7 +15,7 @@ class DetalleProducto extends Component {
                     </div>
                 </CardMedia>
                 <CardActions>
-                    <FlatButton label="Añadir" icon={<ShoppingBasket />} />
+                    <FlatButton label="Añadir" icon={<ShoppingBasket />} onClick={this.props.handleComprarClick}/>
                 </CardActions>
             </Card>
         );
