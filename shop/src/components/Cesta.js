@@ -15,24 +15,27 @@ const propTypes = {
 };
 
 class Cesta extends Component {
+    renderLinea(linea){
+        return <TableRow key={linea.id_producto} >
+            <TableRowColumn className="cesta_nombre">{linea.nombre}</TableRowColumn>
+            <TableRowColumn>{linea.precio} €</TableRowColumn>
+            <TableRowColumn>
+                <input type="number" min="0" max="99" value={linea.cantidad} 
+                            onChange={(e)=> this.props.handleChangeCantidad(linea.id_producto, +e.target.value)} />
+            </TableRowColumn>
+            <TableRowColumn>{linea.precio * linea.cantidad} €</TableRowColumn>
+        </TableRow> 
+    }
+    
     render() {
         
         let total = 0;
-        this.refLineas = {};
-
-        const lineas = this.props.cesta.map((linea) => {
-            total += linea.cantidad*linea.precio;
-
-            return <TableRow key={linea.id_producto} >
-                <TableRowColumn className="cesta_nombre">{linea.nombre}</TableRowColumn>
-                <TableRowColumn>{linea.precio} €</TableRowColumn>
-                <TableRowColumn>
-                    <input type="number" min="0" max="99" value={linea.cantidad} 
-                                onChange={(e)=> this.props.handleChangeCantidad(linea.id_producto, +e.target.value)} />
-                </TableRowColumn>
-                <TableRowColumn>{linea.precio * linea.cantidad} €</TableRowColumn>
-            </TableRow> 
-        });
+        const lineas = this.props.cesta
+            .sort((a,b) => a.id_producto - b.id_producto )
+            .map((linea) => {
+                total += linea.cantidad*linea.precio;
+                return this.renderLinea(linea);
+            });
 
 
         return (
@@ -51,6 +54,7 @@ class Cesta extends Component {
                     </TableBody>
                 </Table>
                 <h3>Total: {total} €</h3>
+                {this.props.children}
             </div>
         );
     }

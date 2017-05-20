@@ -48,7 +48,10 @@ class App extends Component {
 							titulo={productoDetalle.nombre} 
 							handleComprarClick={this.addDetalleToCesta}/>
 					</Paper>
-					<Cesta cesta={datosCesta} handleChangeCantidad={this.actualizarCesta} /> </div>
+					<Cesta cesta={datosCesta} handleChangeCantidad={this.actualizarCesta} > 
+						<h3>Cupon de descuento aplicado</h3>
+					</Cesta> 
+				</div>
 			</div>
 		);
 	}
