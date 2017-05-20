@@ -4,6 +4,15 @@ import Producto from './Producto';
 import {GridList} from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
 
+import PropTypes from 'prop-types';
+import {ProductoType} from '../propTypes';
+
+
+const propTypes = {
+	handleProductoClick:    PropTypes.func.isRequired,
+    productos:              PropTypes.arrayOf(ProductoType)
+};
+
 class ListadoProductos extends Component {
     render() {
 
@@ -22,4 +31,5 @@ class ListadoProductos extends Component {
     }
 }
 
+ListadoProductos.propTypes = propTypes;
 export default ListadoProductos;

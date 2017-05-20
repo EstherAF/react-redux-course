@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 import {GridTile} from 'material-ui/GridList';
+import PropTypes from 'prop-types';
+
+
+const propTypes = {
+    onClick: PropTypes.func.isRequired,
+    precio:  PropTypes.number.isRequired,
+    nombre:  PropTypes.string.isRequired,
+    img:     PropTypes.string.isRequired,
+};
 
 class Producto extends Component {
     render() {
@@ -13,4 +22,5 @@ class Producto extends Component {
     }
 }
 
+Producto.propTypes = propTypes;
 export default Producto;

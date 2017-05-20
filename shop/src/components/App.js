@@ -9,12 +9,12 @@ import Cesta from './Cesta';
 
 import productos from '../devData/productos';
 
-
 class App extends Component {
 	constructor(props){
 		super(props);
 		this.setProductoDetalle = this.setProductoDetalle.bind(this);
 		this.addDetalleToCesta = this.addDetalleToCesta.bind(this);
+		this.actualizarCesta = this.actualizarCesta.bind(this);
 
 		this.state = {
 			productos,
@@ -44,9 +44,11 @@ class App extends Component {
 				<div id="app">
 					<ListadoProductos productos={productos} handleProductoClick={this.setProductoDetalle}/>
 					<Paper id="detalle" zDepth={3}>
-						<DetalleProducto {...productoDetalle} handleComprarClick={this.addDetalleToCesta}/>
+						<DetalleProducto {...productoDetalle}
+							titulo={productoDetalle.nombre} 
+							handleComprarClick={this.addDetalleToCesta}/>
 					</Paper>
-					<Cesta cesta={datosCesta} /> </div>
+					<Cesta cesta={datosCesta} handleChangeCantidad={this.actualizarCesta} /> </div>
 			</div>
 		);
 	}
@@ -55,6 +57,7 @@ class App extends Component {
 			id_producto_detalle: id_producto
 		});
 	}
+
 	addDetalleToCesta(){
 		this.setState((prevState)=>{
 			const id_producto = prevState.id_producto_detalle;
@@ -66,6 +69,18 @@ class App extends Component {
 					[id_producto]: { id_producto, cantidad }
 				} 
 			};
+		});
+	}
+
+	actualizarCesta(id_producto, cantidad){
+		this.setState((prevState)=>{
+			const cesta = {...prevState.cesta};
+			if(cantidad < 1 ){
+				delete cesta[id_producto];
+			} else {
+				cesta[id_producto] = { id_producto, cantidad };
+			}
+			return { cesta };
 		});
 	}
 }

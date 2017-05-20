@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {Card, CardActions, CardMedia, CardHeader} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import ShoppingBasket from 'material-ui/svg-icons/action/shopping-basket';
 import '../style/Detalle.css';
+
+
+const propTypes = {
+	titulo:                 PropTypes.string.isRequired,
+    precio:                 PropTypes.number.isRequired,
+    img:                    PropTypes.string.isRequired,
+    handleComprarClick:     PropTypes.func.isRequired
+};
+
 
 class DetalleProducto extends Component {
     render() {
@@ -21,5 +31,5 @@ class DetalleProducto extends Component {
         );
     }
 }
-
+DetalleProducto.propTypes = propTypes;
 export default DetalleProducto;
