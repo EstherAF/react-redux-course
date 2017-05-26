@@ -9,38 +9,59 @@ import Cesta from './Cesta';
 
 import productos from '../devData/productos';
 
+import { increment, decrement } from '../actions/actionCreators';
+
+
 class App extends Component {
-	constructor(props){
-		super(props);
-		this.setProductoDetalle = this.setProductoDetalle.bind(this);
-		this.addDetalleToCesta = this.addDetalleToCesta.bind(this);
-		this.actualizarCesta = this.actualizarCesta.bind(this);
+  constructor(props) {
+    super(props);
+    this.setProductoDetalle = this.setProductoDetalle.bind(this);
+    this.addDetalleToCesta = this.addDetalleToCesta.bind(this);
+    this.actualizarCesta = this.actualizarCesta.bind(this);
 
-		this.state = {
-			productos,
-			cesta: {
-				1: {
-					id_producto: productos[0].id, 
-					cantidad: 2
-				}
-			},
-			id_producto_detalle: productos[0].id
-		};
+    this.state = {
+      productos,
+      cesta: {
+        1: {
+          id_producto: productos[0].id,
+          cantidad: 2
+        }
+      },
+      id_producto_detalle: productos[0].id
+    };
+  }
+  componentWillMount() {
+    this.unsuscribe = this.props.store.subscribe(this.update.bind(this));
+  }
+	componentWillUnMount(){
+		if(this.unsuscribe) this.unsuscribe();
 	}
+  update() {
+    this.forceUpdate();
+  }
 	render() {
-		const productoDetalle = this.state.productos.find(p => p.id === this.state.id_producto_detalle);
-		const datosCesta = Object.values(this.state.cesta).map(linea => {
-			const productoLinea = this.state.productos.find(p => p.id === linea.id_producto);
-			return {
-				id_producto: linea.id_producto,
-				cantidad: linea.cantidad,
-				nombre: productoLinea.nombre,
-				precio: productoLinea.precio,
-			}
-		});
+    const productoDetalle = this.state.productos.find(p => p.id === this.state.id_producto_detalle);
+    const datosCesta = Object.values(this.state.cesta).map(linea => {
+      const productoLinea = this.state.productos.find(p => p.id === linea.id_producto);
+      return {
+        id_producto: linea.id_producto,
+        cantidad: linea.cantidad,
+        nombre: productoLinea.nombre,
+        precio: productoLinea.precio,
+      }
+    });
 
+    const { store } = this.props;
+    
 		return (
 			<div>
+				<h1>
+					{store.getState().counter}
+					<span onClick={() => store.dispatch(increment())} >+  </span>
+					<span onClick={() => store.dispatch(decrement())} >-  </span>
+					<span onClick={() => store.dispatch(increment(5))} >+5  </span>
+					<span onClick={() => store.dispatch(decrement(5))} >-5  </span>
+				</h1>
 				<div id="app">
 					<ListadoProductos productos={productos} handleProductoClick={this.setProductoDetalle}/>
 					<Paper id="detalle" zDepth={3}>
@@ -55,6 +76,7 @@ class App extends Component {
 			</div>
 		);
 	}
+
 	setProductoDetalle(id_producto){
 		this.setState({
 			id_producto_detalle: id_producto
