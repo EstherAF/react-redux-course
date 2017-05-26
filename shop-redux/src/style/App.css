@@ -1,0 +1,33 @@
+#app {
+  columns: 3;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.listado {
+  overflow: auto;
+  height: 100%;
+}
+
+#detalle {
+  overflow: auto;
+  height: 100%;
+  padding-top: 20px;
+}
+
+#detalle>h2 {
+  padding-left: 15px;
+}
+
+#cargando {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 100;
+  opacity: .5;
+}
