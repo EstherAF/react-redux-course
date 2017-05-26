@@ -7,23 +7,40 @@ import App from './components/App';
 import './style/index.css';
 
 //Redux
-import { createStore } from 'redux';
-import reducer from './reducers/counter';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import reducer from './reducers/index';
+
+//React-redux
+import { Provider } from 'react-redux';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
+const composeEnhancers =
+  typeof window === 'object' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+      // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+    }) : compose;
+
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk),
+  // other store enhancers if any
+);
 //Create Store receives a reducer. The reducer is a function that uses the action 
 //to create the new states
 const store = createStore(
   reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  enhancer
 );
 
 ReactDOM.render(
   <MuiThemeProvider>
-    <App store={store} />
+    <Provider store={store} >
+      <App />
+    </Provider>
   </MuiThemeProvider>,
   document.getElementById('root')
 );
