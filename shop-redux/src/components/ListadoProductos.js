@@ -9,8 +9,7 @@ import {ProductoType} from '../propTypes';
 
 
 const propTypes = {
-	handleProductoClick:    PropTypes.func.isRequired,
-    productos:              PropTypes.arrayOf(ProductoType)
+	productos:              PropTypes.arrayOf(ProductoType)
 };
 
 class ListadoProductos extends Component {
@@ -18,8 +17,7 @@ class ListadoProductos extends Component {
 
         const productos = this.props.productos.map(producto => 
             <Producto key={producto.id} 
-                    {...producto}
-                    onClick={() => this.props.handleProductoClick(producto.id) } 
+                    {...producto} 
             />
         )
         return (

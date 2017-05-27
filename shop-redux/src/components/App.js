@@ -17,7 +17,6 @@ import '../style/App.css';
 
 class App extends Component {
 	render() {
-		const productoDetalle = productos.find(p => p.id === this.props.id_producto_detalle);
 		const datosCesta = Object.values(this.props.cesta).map(linea => {
 		const productoLinea = productos.find(p => p.id === linea.id_producto);
 		return {
@@ -49,14 +48,9 @@ class App extends Component {
 				<div id='cargando' style={cargandoStyle} />
 				<Route path='/contador' render={renderContador} /> 
 				<div id="app">
-					<ListadoProductos productos={productos} handleProductoClick={this.props.setProductoDetalle}/>
+					<ListadoProductos productos={productos} />
 					<Paper id="detalle" zDepth={3}>
-							{productoDetalle
-								?	<DetalleProducto {...productoDetalle}
-										titulo={productoDetalle.nombre} 
-										handleComprarClick={() => this.props.añadirACesta(this.props.id_producto_detalle) }/>
-								: null
-							}
+						<Route path = '/detalle/:id' render={this.renderDetalle} />
 					</Paper>
 					<Cesta cesta={datosCesta} handleChangeCantidad={this.props.cambiarNumProductosCesta} > 
 						<h3>Cupon de descuento aplicado</h3>
@@ -65,6 +59,14 @@ class App extends Component {
 			</div>
 			</Router>
 		);
+	}
+
+	renderDetalle({ match }) {
+		const { id } = match.params;
+		const productoDetalle = productos.find(p => p.id === +id);
+		return <DetalleProducto {...productoDetalle}
+					titulo={productoDetalle.nombre} 
+					handleComprarClick={() => this.props.añadirACesta(+id) }/>
 	}
 }
 

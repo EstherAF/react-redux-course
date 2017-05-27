@@ -1,6 +1,5 @@
 export const INC = 'INC';
 export const DEC = 'DEC';
-export const SET_PRODUCTO_DETALLE = 'SET_PRODUCTO_DETALLE';
 export const AÑADIR_A_CESTA = 'AÑADIR_A_CESTA';
 export const CAMBIAR_NUM_PRODUCTOS_CESTA = 'CAMBIAR_NUM_PRODUCTOS_CESTA';
 export const MOSTRAR_CARGANDO = 'MOSTRAR_CARGANDO';

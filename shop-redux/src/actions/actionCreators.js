@@ -10,11 +10,6 @@ export const decrement = (value = 1) => ({
     value
 });
 
-export const setProductoDetalle = (id) => ({
-    type: types.SET_PRODUCTO_DETALLE,
-    id
-});
-
 export const cambiarNumProductosCesta = (id, cantidad) => ({
     type: types.CAMBIAR_NUM_PRODUCTOS_CESTA,
     id,
