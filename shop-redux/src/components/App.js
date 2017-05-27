@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 //Function that connects react with redux
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import Paper from 'material-ui/Paper';
 
 import ListadoProductos from './ListadoProductos';
@@ -44,19 +44,22 @@ class App extends Component {
 
 		return (
 			<Router>
-			<div>
-				<div id='cargando' style={cargandoStyle} />
-				<Route path='/contador' render={renderContador} /> 
-				<div id="app">
-					<ListadoProductos productos={productos} />
-					<Paper id="detalle" zDepth={3}>
-						<Route path = '/detalle/:id' render={this.renderDetalle} />
-					</Paper>
-					<Cesta cesta={datosCesta} handleChangeCantidad={this.props.cambiarNumProductosCesta} > 
-						<h3>Cupon de descuento aplicado</h3>
-					</Cesta> 
+				<div>
+					<div id='cargando' style={cargandoStyle} />
+					<Route path='/contador' render={renderContador} /> 
+					<div id="app">
+						<ListadoProductos productos={productos} />
+						<Paper id="detalle" zDepth={3}>
+							<Switch>
+								<Route path = '/detalle/:id' render={this.renderDetalle} />
+								<Route render={() => <h2>404 - Not found</h2>} />
+							</Switch>
+						</Paper>
+						<Cesta cesta={datosCesta} handleChangeCantidad={this.props.cambiarNumProductosCesta} > 
+							<h3>Cupon de descuento aplicado</h3>
+						</Cesta> 
+					</div>
 				</div>
-			</div>
 			</Router>
 		);
 	}
