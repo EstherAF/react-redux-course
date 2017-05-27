@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 //Function that connects react with redux
 import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Paper from 'material-ui/Paper';
 
 import ListadoProductos from './ListadoProductos';
@@ -31,16 +32,22 @@ class App extends Component {
 		const cargandoStyle = {
 			display: this.props.cargando? 'block' : 'none'
 		};
+
+		const renderContador = () => (
+			<h1>
+				{contador}
+				<span onClick={this.props.incrementar} >+  </span>
+				<span onClick={this.props.decrementar} >-  </span>
+				<span onClick={() => this.props.incrementar(5)} >+5  </span>
+				<span onClick={() => this.props.decrementar(5)} >-5  </span>
+			</h1>
+		);
+
 		return (
+			<Router>
 			<div>
 				<div id='cargando' style={cargandoStyle} />
-				<h1>
-					{contador}
-					<span onClick={this.props.incrementar} >+  </span>
-					<span onClick={this.props.decrementar} >-  </span>
-					<span onClick={() => this.props.incrementar(5)} >+5  </span>
-					<span onClick={() => this.props.decrementar(5)} >-5  </span>
-				</h1>
+				<Route path='/contador' render={renderContador} /> 
 				<div id="app">
 					<ListadoProductos productos={productos} handleProductoClick={this.props.setProductoDetalle}/>
 					<Paper id="detalle" zDepth={3}>
@@ -56,6 +63,7 @@ class App extends Component {
 					</Cesta> 
 				</div>
 			</div>
+			</Router>
 		);
 	}
 }
